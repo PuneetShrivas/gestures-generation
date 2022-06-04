@@ -2,6 +2,7 @@ function gesture=drawSenteceGesture(lemmas,phrases,meta_datas,POS)
 gesture.X_positions=[];
 gesture.Y_positions=[];
 gesture.dir_sequence=[];
+gesture.pressure_variation=[];
 % gesture.angular_vel=0;
 % gesture.t_render=3;
 % gesture.data_density=0.5;
@@ -119,11 +120,16 @@ for i=1:length(lemmas)
     disp("X_constrained")
     disp(constituents(i).X_constrained)
     if i>=2
-        if(constituents(i-1).dir_sequence(end)==5 && (constituents(i).dir_sequence(1)==5 || constituents(i).dir_sequence(1)==4 || constituents(i).dir_sequence(1)==6) && constituents(i).X_constrained==0 )
-%             shifts=[constituents(i-1).X_positions(end)-constituents(i).X_positions(1) constituents(i-1).X_positions(end)-min(constituents(i).X_positions) constituents(i-1).X_positions(end)-max(constituents(i).X_positions)];
-            shifts=[constituents(i-1).X_positions(end)-constituents(i).X_positions(1) constituents(i-1).X_positions(end)-min(constituents(i).X_positions)];
-            if(constituents(i-1).X_positions(end)<)
-            X_shift=min(shifts);
+        if(constituents(i).X_constrained==0 )
+            X_shift=0;
+            if(constituents(i-1).X_positions(end)<=constituents(i).X_positions(1))
+                shifts=[constituents(i-1).X_positions(end)-constituents(i).X_positions(1) 1-min(constituents(i).X_positions)];
+                X_shift=max(shifts);
+            end
+            if(constituents(i-1).X_positions(end)>constituents(i).X_positions(1))
+                shifts=[constituents(i-1).X_positions(end)-constituents(i).X_positions(1) 9-max(constituents(i).X_positions)];
+                X_shift=min(shifts);
+            end
             constituents(i).X_positions=constituents(i).X_positions+X_shift;
             disp("X_shift")
             disp(X_shift)

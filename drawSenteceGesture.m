@@ -2,6 +2,7 @@ function gesture=drawSenteceGesture(lemmas,phrases,meta_datas,POS)
 gesture.X_positions=[];
 gesture.Y_positions=[];
 gesture.dir_sequence=[];
+gesture.pressure_variation=[];
 % gesture.angular_vel=0;
 % gesture.t_render=3;
 % gesture.data_density=0.5;
@@ -134,10 +135,15 @@ for i=1:length(lemmas)
             disp(X_shift)
         end  
     end
+    constituents(i).pressure_variation=ones(1,length(constituents(i).X_positions));
+    disp(constituents(i).pressure_variation)
+    constituents(i).pressure_variation(end)=0;
+
 %     Add consitituent to overall gesture
     gesture.X_positions=horzcat(gesture.X_positions,constituents(i).X_positions);
     gesture.Y_positions=horzcat(gesture.Y_positions,constituents(i).Y_positions);
     gesture.dir_sequence=horzcat(gesture.dir_sequence,constituents(i).dir_sequence);
+    gesture.pressure_variation=horzcat(gesture.pressure_variation,constituents(i).pressure_variation);
 end
   
 % gesture.X_positions=[1 2 3];
